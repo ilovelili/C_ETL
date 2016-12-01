@@ -1,0 +1,12 @@
+{
+    "onpremises" : {
+        "db": {
+            "client": "mysql",
+            "credential": {
+                "user": "your user account",
+                "password": "your password",
+                "database": "your database"
+            }
+        }
+    }
+}
