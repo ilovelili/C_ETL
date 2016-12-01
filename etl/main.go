@@ -8,25 +8,14 @@ import (
 	"fmt"
 
 	"github.com/dailyburn/ratchet/processors"
+	_ "github.com/denisenkom/go-mssqldb"
 	_ "github.com/go-sql-driver/mysql"
+	_ "github.com/lib/pq"
 )
-
-var (
-	client           string
-	connectionstring string
-)
-
-func init() {
-	config := config.GetConfig()
-
-	client = config.OnPremisesConfig.DatabaseConfig.Client
-	connectionstring = config.OnPremisesConfig.DatabaseConfig.User + ":" +
-		config.OnPremisesConfig.DatabaseConfig.Password + "@/" +
-		config.OnPremisesConfig.DatabaseConfig.Database
-}
 
 func main() {
-	db, err := sql.Open(client, connectionstring)
+	config := config.GetConfig()
+	db, err := sql.Open(config.Client, config.GetConnectionString())
 	defer db.Close()
 
 	if err != nil {

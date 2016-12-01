@@ -1,7 +1,10 @@
 {
     "onpremises" : {
         "db": {
-            "client": "mysql",
+            "client": "mysql | mssql | postgres",            
+            "server": "your server",
+            "port": "your port",
+            "database": "your databse",
             "credential": {
                 "user": "your user account",
                 "password": "your password",

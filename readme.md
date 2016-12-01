@@ -17,7 +17,5 @@ Here is a conceptual drawing of a fairly simple Pipeline:
 +----------------------------------------------------------------------------------------------------+
 </pre>
 
-## install
-
 ## contact
 mju@cimpress.com
