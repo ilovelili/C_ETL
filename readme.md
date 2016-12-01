@@ -19,6 +19,7 @@ Here is a conceptual drawing of a fairly simple Pipeline:
 
 ## Example
 <code>
+
     // define a sql query processor
     users := processors.NewSQLReader(db, query.UsersQuery())
 	
@@ -47,7 +48,7 @@ Here is a conceptual drawing of a fairly simple Pipeline:
 
 	// Finally, create and run the Pipeline
 	pipeline := NewBranchingPipeline(layout)
-    err = <-pipeline.Run()
+	err = <-pipeline.Run()
 </code>
 
 ## Contact
