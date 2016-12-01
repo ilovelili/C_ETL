@@ -6,7 +6,7 @@
 # Folders
 _obj
 _test
-github.com
+/github.com
 golang.org
 sourcegraph.com
 
