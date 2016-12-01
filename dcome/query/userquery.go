@@ -1,4 +1,4 @@
-package dcome
+package query
 
 import "fmt"
 

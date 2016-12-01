@@ -2,11 +2,12 @@ package main
 
 import (
 	"database/sql"
-	"dcome"
+	query "dcome/query"
+	transformer "dcome/transformer"
 	"etl/config"
+	"os"
 
-	"fmt"
-
+	"github.com/dailyburn/ratchet"
 	"github.com/dailyburn/ratchet/processors"
 	_ "github.com/denisenkom/go-mssqldb"
 	_ "github.com/go-sql-driver/mysql"
@@ -23,7 +24,28 @@ func main() {
 	}
 
 	// First initalize the DataProcessors
-	read := processors.NewSQLReader(db, dcome.UsersQuery())
+	users := processors.NewSQLReader(db, query.UsersQuery())
 
-	fmt.Println(read)
+	transformer := transformer.NewUserTransformer()
+	writeCSV := processors.NewCSVWriter(os.Stdout)
+
+	layout, err := ratchet.NewPipelineLayout(
+		ratchet.NewPipelineStage(
+			ratchet.Do(users).Outputs(transformer),
+		),
+		ratchet.NewPipelineStage(
+			ratchet.Do(transformer).Outputs(writeCSV),
+		),
+		ratchet.NewPipelineStage(
+			ratchet.Do(writeCSV),
+		),
+	)
+
+	if err != nil {
+		panic(err.Error())
+	}
+
+	// Finally, create and run the Pipeline
+	pipeline := ratchet.NewBranchingPipeline(layout)
+	err = <-pipeline.Run()
 }
