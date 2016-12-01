@@ -7,7 +7,7 @@ import (
 	"etl/config"
 	"os"
 
-	"github.com/dailyburn/ratchet"
+	. "github.com/dailyburn/ratchet"
 	"github.com/dailyburn/ratchet/processors"
 	_ "github.com/denisenkom/go-mssqldb"
 	_ "github.com/go-sql-driver/mysql"
@@ -25,19 +25,18 @@ func main() {
 
 	// First initalize the DataProcessors
 	users := processors.NewSQLReader(db, query.UsersQuery())
-
 	transformer := transformer.NewUserTransformer()
 	writeCSV := processors.NewCSVWriter(os.Stdout)
 
-	layout, err := ratchet.NewPipelineLayout(
-		ratchet.NewPipelineStage(
-			ratchet.Do(users).Outputs(transformer),
+	layout, err := NewPipelineLayout(
+		NewPipelineStage(
+			Do(users).Outputs(transformer),
 		),
-		ratchet.NewPipelineStage(
-			ratchet.Do(transformer).Outputs(writeCSV),
+		NewPipelineStage(
+			Do(transformer).Outputs(writeCSV),
 		),
-		ratchet.NewPipelineStage(
-			ratchet.Do(writeCSV),
+		NewPipelineStage(
+			Do(writeCSV),
 		),
 	)
 
@@ -46,6 +45,6 @@ func main() {
 	}
 
 	// Finally, create and run the Pipeline
-	pipeline := ratchet.NewBranchingPipeline(layout)
+	pipeline := NewBranchingPipeline(layout)
 	err = <-pipeline.Run()
 }

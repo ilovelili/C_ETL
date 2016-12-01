@@ -17,5 +17,40 @@ Here is a conceptual drawing of a fairly simple Pipeline:
 +----------------------------------------------------------------------------------------------------+
 </pre>
 
+## Example
+<code>
+
+    // define a sql query processor
+    users := processors.NewSQLReader(db, query.UsersQuery())
+	
+    // define a data transformer processor
+    transformer := transformer.NewUserTransformer()
+
+    // define a csv output processor
+	writeCSV := processors.NewCSVWriter(os.Stdout)
+
+    // create pipeline layout
+	layout, err := NewPipelineLayout(
+		NewPipelineStage(
+			Do(users).Outputs(transformer),
+		),
+		NewPipelineStage(
+			Do(transformer).Outputs(writeCSV),
+		),
+		NewPipelineStage(
+			Do(writeCSV),
+		),
+	)
+
+	if err != nil {
+		panic(err.Error())
+	}
+
+	// Finally, create and run the Pipeline
+	pipeline := NewBranchingPipeline(layout)
+	err = <-pipeline.Run()
+    
+</code>
+
 ## Contact
 mju@cimpress.com
