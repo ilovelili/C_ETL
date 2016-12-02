@@ -11,5 +11,27 @@
                 "database": "your database"
             }
         }
+    },
+    "cloud" : {        
+        "gcp": {
+            "credential": {
+                "jsonpempath": "your json pem path"
+            },
+            "bigquery": {                
+                "projectId": "your project id",
+                "datasetId": "your dataset id"
+            }
+        },
+        "aws": {
+            "credential": {
+                "accesskeyId": "your access key id",
+                "secret": "your secret"
+            },
+            "s3": {
+                "region": "your s3 region",
+                "bucket": "your bucket",
+                "key": "your key"
+            }
+        }
     }
 }
