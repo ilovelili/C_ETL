@@ -1,6 +1,6 @@
 # CimpressJP ETL Framework
 
-<h2>A library for performing data pipeline / ETL tasks in Go.</h2>
+<h2>A framework for performing data pipeline / ETL tasks in Go.</h2>
 
 ## Introduction
 The main construct in etl framework is Pipeline. A Pipeline has a series of PipelineStages, which will each perform some type of data processing, and then send new data on to the next stage. Each PipelineStage consists of one or more DataProcessors, which are responsible for receiving, processing, and then sending data on to the next stage of processing. DataProcessors each run in their own goroutine, and therefore all data processing can be executing concurrently.
@@ -47,5 +47,10 @@ pipeline, err := pipeline.SQL_Transform_BigQuery(users, transformer, bigquery)
 // run the pipeline
 result = <-pipeline.Run()
 ```
+
+## Use-case
+- Handling extracting data from application databases, transforming it into reporting-oriented formats, and then loading it into dedicated reporting databases.
+- When you have data stored in disparate locations that can't be easily tied together, for example, if you have some CSV data stored on S3, some related data in a SQL database, and want to combine them into a final CSV or SQL output.
+
 ## Contact
 mju@cimpress.com

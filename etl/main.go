@@ -24,7 +24,6 @@ func main() {
 		panic(err.Error())
 	}
 
-	// First initalize the DataProcessors
 	users := processors.NewSQLReader(db, query.UsersQuery())
 	transformer := transformer.NewUserTransformer()
 
