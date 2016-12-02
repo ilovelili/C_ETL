@@ -21,7 +21,6 @@ Here is a conceptual drawing of a fairly simple Pipeline:
 
 ## Example
 <code>
-
 	/**
 	* this code snippet explains how to set up a simplest pipeline to perform the following operations
 	* . Read from sql
