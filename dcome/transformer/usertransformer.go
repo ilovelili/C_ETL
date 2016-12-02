@@ -1,7 +1,8 @@
 package transformer
 
 import (
-	model "dcome/model"
+	"dcome/model"
+	"etl/transformer"
 
 	"github.com/dailyburn/ratchet/data"
 )
@@ -11,7 +12,7 @@ type userTransformer struct {
 }
 
 // NewUserTransformer create a new user transformer
-func NewUserTransformer() *userTransformer {
+func NewUserTransformer() transformer.CustomTransformer {
 	return &userTransformer{}
 }
 
