@@ -9,6 +9,7 @@ _test
 /github.com
 golang.org
 sourcegraph.com
+gopkg.in
 
 # Architecture specific extensions/prefixes
 *.[568vq]
