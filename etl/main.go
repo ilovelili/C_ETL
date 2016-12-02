@@ -6,7 +6,8 @@ import (
 	"dcome/transformer"
 	"etl/config"
 	"etl/pipeline"
-	"os"
+
+	"fmt"
 
 	"github.com/dailyburn/ratchet/processors"
 	_ "github.com/denisenkom/go-mssqldb"
@@ -26,13 +27,15 @@ func main() {
 	// First initalize the DataProcessors
 	users := processors.NewSQLReader(db, query.UsersQuery())
 	transformer := transformer.NewUserTransformer()
-	writeCSV := processors.NewCSVWriter(os.Stdout)
 
-	pipeline, err := pipeline.SQL_Transform_CSV(users, transformer, writeCSV)
+	bigqueryconfig := &processors.BigQueryConfig{JsonPemPath: config.JsonPemPath, ProjectID: config.ProjectID, DatasetID: config.DatasetID}
+	bigquery := processors.NewBigQueryWriter(bigqueryconfig, "user")
+
+	pipeline, err := pipeline.SQL_Transform_BigQuery(users, transformer, bigquery)
 
 	if err != nil {
 		panic(err.Error())
 	}
 
-	err = <-pipeline.Run()
+	fmt.Println(<-pipeline.Run())
 }

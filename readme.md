@@ -29,9 +29,11 @@ Here is a conceptual drawing of a fairly simple Pipeline:
 	
 	transformer := transformer.NewUserTransformer()
 	
-	// define a csv output processor
+	// define a bigquery output processor
 	
-	writeCSV := processors.NewCSVWriter(os.Stdout)
+	bigqueryconfig := &processors.BigQueryConfig{JsonPemPath: config.JsonPemPath, ProjectID: config.ProjectID, DatasetID: config.DatasetID}	
+	bigquery := processors.NewBigQueryWriter(bigqueryconfig, "user")
+	pipeline, err := pipeline.SQL_Transform_BigQuery(users, transformer, bigquery)
 
 	// create pipeline layout
 	
@@ -40,10 +42,10 @@ Here is a conceptual drawing of a fairly simple Pipeline:
 			Do(users).Outputs(transformer),
 		),
 		NewPipelineStage(
-			Do(transformer).Outputs(writeCSV),
+			Do(transformer).Outputs(bigquery),
 		),
 		NewPipelineStage(
-			Do(writeCSV),
+			Do(bigquery),
 		),
 	)
 

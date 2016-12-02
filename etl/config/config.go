@@ -26,9 +26,52 @@ type OnPremisesConfig struct {
 	DatabaseConfig `json:"db"`
 }
 
+// GCPCredential Google Cloud Platform credential
+type GCPCredential struct {
+	JsonPemPath string `json:"jsonpempath"`
+}
+
+// BigQuery bigquery config
+type BigQuery struct {
+	ProjectID string `json:"projectId"`
+	DatasetID string `json:"datasetId"`
+}
+
+// GoogleCloudPlatform Google Cloud Platform config
+type GoogleCloudPlatform struct {
+	GCPCredential `json:"credential"`
+	BigQuery      `json:"bigquery"`
+}
+
+// AWSCredential Amazon Web Service credential
+type AWSCredential struct {
+	AccesskeyID     string `json:"accesskeyId"`
+	AccesskeySecret string `json:"secret"`
+}
+
+// S3 S3 config
+type S3 struct {
+	Region string `json:"region"`
+	Bucket string `json:"bucket"`
+	Key    string `json:"key"`
+}
+
+// AmazonWebService Amazon Web Service Config
+type AmazonWebService struct {
+	AWSCredential `json:"credential"`
+	S3            `json:"s3"`
+}
+
+// CloudConfig cloud config supports Google Cloud Platform and Amazon Web Service
+type CloudConfig struct {
+	GoogleCloudPlatform `json:"gcp"`
+	AmazonWebService    `json:"aws"`
+}
+
 // Config config info
 type Config struct {
 	OnPremisesConfig `json:"onpremises"`
+	CloudConfig      `json:"cloud"`
 }
 
 // GetConfig parse config info from config.json
