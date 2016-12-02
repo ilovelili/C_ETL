@@ -19,34 +19,33 @@ Here is a conceptual drawing of a fairly simple Pipeline:
 +----------------------------------------------------------------------------------------------------+
 </pre>
 ## Example
-<code>
-	
-	/**
-	* this code snippet explains how to set up a simplest pipeline to perform the following operations
-	* . Read from sql
-	* . Transform the data
-	* . Dump to Google bigquery
-	*/
+```go
+/**
+* this code snippet explains how to set up a simplest pipeline to perform the following operations
+* . Read from sql
+* . Transform the data
+* . Dump to Google bigquery
+*/
 
-	// define a sql query processor
-	users := processors.NewSQLReader(db, query.UsersQuery())
+// define a sql query processor
+users := processors.NewSQLReader(db, query.UsersQuery())
 
-	// define a custom data transformer processor
-	transformer := transformer.NewUserTransformer()
-	
-	// define a bigquery output processor*/	
-	bigqueryconfig := &processors.BigQueryConfig{
-		JsonPemPath: <<your json pem>>, 
-		ProjectID: <<your projectid>>, 
-		DatasetID: <<your bigquery dataset>>
-	}	
-	bigquery := processors.NewBigQueryWriter(bigqueryconfig, "user")
+// define a custom data transformer processor
+transformer := transformer.NewUserTransformer()
 
-	// create the sql => custom transform => bigquery static pipeline*/
-	pipeline, err := pipeline.SQL_Transform_BigQuery(users, transformer, bigquery)
-	
-	// run the pipeline
-	result = <-pipeline.Run()
-</code>
+// define a bigquery output processor*/	
+bigqueryconfig := &processors.BigQueryConfig{
+	JsonPemPath: <<your json pem>>, 
+	ProjectID: <<your projectid>>, 
+	DatasetID: <<your bigquery dataset>>
+}	
+bigquery := processors.NewBigQueryWriter(bigqueryconfig, "user")
+
+// create the sql => custom transform => bigquery static pipeline*/
+pipeline, err := pipeline.SQL_Transform_BigQuery(users, transformer, bigquery)
+
+// run the pipeline
+result = <-pipeline.Run()
+```
 ## Contact
 mju@cimpress.com
