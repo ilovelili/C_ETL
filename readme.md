@@ -39,7 +39,7 @@ bigqueryconfig := &processors.BigQueryConfig{
 	ProjectID: <<your projectid>>, 
 	DatasetID: <<your bigquery dataset>>
 }	
-bigquery := processors.NewBigQueryWriter(bigqueryconfig, "user")
+bigquery := processors.NewBigQueryWriter(bigqueryconfig, <<your big query table>>)
 
 // create the sql => custom transform => bigquery static pipeline*/
 pipeline, err := pipeline.SQL_Transform_BigQuery(users, transformer, bigquery)
