@@ -35,7 +35,11 @@ Here is a conceptual drawing of a fairly simple Pipeline:
 	transformer := transformer.NewUserTransformer()
 	
 	// define a bigquery output processor*/	
-	bigqueryconfig := &processors.BigQueryConfig{JsonPemPath: config.JsonPemPath, ProjectID: config.ProjectID, DatasetID: config.DatasetID}	
+	bigqueryconfig := &processors.BigQueryConfig{
+		JsonPemPath: <<your json pem>>, 
+		ProjectID: <<your projectid>>, 
+		DatasetID: <<your bigquery dataset>>
+	}	
 	bigquery := processors.NewBigQueryWriter(bigqueryconfig, "user")
 
 	// create the sql => custom transform => bigquery static pipeline*/
