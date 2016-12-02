@@ -20,43 +20,29 @@ Here is a conceptual drawing of a fairly simple Pipeline:
 </pre>
 
 ## Example
-<code>	
-	/*define a sql query processor*/	
+<code>
+
+	/**
+	* this code snippet explains how to set up a simplest pipeline to perform the following operations
+	* . Read from sql
+	* . Transform the data
+	* . Dump to Google bigquery
+	*/
+
+	// define a sql query processor
 	users := processors.NewSQLReader(db, query.UsersQuery())
 
-	/*define a custom data transformer processor*/	
+	// define a custom data transformer processor
 	transformer := transformer.NewUserTransformer()
 	
-	/*define a bigquery output processor*/	
+	// define a bigquery output processor*/	
 	bigqueryconfig := &processors.BigQueryConfig{JsonPemPath: config.JsonPemPath, ProjectID: config.ProjectID, DatasetID: config.DatasetID}	
 	bigquery := processors.NewBigQueryWriter(bigqueryconfig, "user")
 
-	/*create the sql => custom transform => bigquery static pipeline*/
+	// create the sql => custom transform => bigquery static pipeline*/
 	pipeline, err := pipeline.SQL_Transform_BigQuery(users, transformer, bigquery)
-
-	/*you can always define a customize pipeline instead of using the built-in pipelines*/	
-	/**
-	layout, err := NewPipelineLayout(
-		NewPipelineStage(
-			Do(users).Outputs(transformer),
-		),
-		NewPipelineStage(
-			Do(transformer).Outputs(bigquery),
-		),
-		NewPipelineStage(
-			Do(bigquery),
-		),
-	)
-
-	if err != nil {
-		panic(err.Error())
-	}
-
-	// Finally, create and run the Pipeline	
-	pipeline := NewBranchingPipeline(layout)
-	*/
 	
-	/*run the pipeline*/
+	// run the pipeline
 	result = <-pipeline.Run()
 </code>
 ## Contact
