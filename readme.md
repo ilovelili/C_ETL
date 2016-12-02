@@ -21,13 +21,17 @@ Here is a conceptual drawing of a fairly simple Pipeline:
 
 ## Example
 <code>
-    users := processors.NewSQLReader(db, query.UsersQuery()) // define a sql query processor
-    
-    transformer := transformer.NewUserTransformer() // define a custom data transformer processor
-    
-	writeCSV := processors.NewCSVWriter(os.Stdout) // define a csv output processor
+	
+	// define a sql query processor
+	users := processors.NewSQLReader(db, query.UsersQuery())
+	
+	// define a custom data transformer processor
+	transformer := transformer.NewUserTransformer()
+	
+	// define a csv output processor
+	writeCSV := processors.NewCSVWriter(os.Stdout)
 
-    // create pipeline layout
+	// create pipeline layout
 	layout, err := NewPipelineLayout(
 		NewPipelineStage(
 			Do(users).Outputs(transformer),
@@ -47,6 +51,7 @@ Here is a conceptual drawing of a fairly simple Pipeline:
 	// Finally, create and run the Pipeline
 	pipeline := NewBranchingPipeline(layout)
 	err = <-pipeline.Run()
+	
 </code>
 ## Contact
 mju@cimpress.com
