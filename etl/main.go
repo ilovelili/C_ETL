@@ -2,12 +2,12 @@ package main
 
 import (
 	"database/sql"
-	query "dcome/query"
-	transformer "dcome/transformer"
+	"dcome/query"
+	"dcome/transformer"
 	"etl/config"
+	"etl/pipeline"
 	"os"
 
-	. "github.com/dailyburn/ratchet"
 	"github.com/dailyburn/ratchet/processors"
 	_ "github.com/denisenkom/go-mssqldb"
 	_ "github.com/go-sql-driver/mysql"
@@ -28,23 +28,11 @@ func main() {
 	transformer := transformer.NewUserTransformer()
 	writeCSV := processors.NewCSVWriter(os.Stdout)
 
-	layout, err := NewPipelineLayout(
-		NewPipelineStage(
-			Do(users).Outputs(transformer),
-		),
-		NewPipelineStage(
-			Do(transformer).Outputs(writeCSV),
-		),
-		NewPipelineStage(
-			Do(writeCSV),
-		),
-	)
+	pipeline, err := pipeline.SQL_Transform_CSV(users, transformer, writeCSV)
 
 	if err != nil {
 		panic(err.Error())
 	}
 
-	// Finally, create and run the Pipeline
-	pipeline := NewBranchingPipeline(layout)
 	err = <-pipeline.Run()
 }
