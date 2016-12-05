@@ -7,10 +7,3 @@ type UserReceived struct {
 	First_Name string
 	Last_Name  string
 }
-
-// UserTransformed user transformed by transformer
-type UserTransformed struct {
-	Prefecture string
-	City       string
-	Name       string
-}

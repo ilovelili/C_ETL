@@ -24,13 +24,13 @@ func main() {
 		panic(err.Error())
 	}
 
-	users := processors.NewSQLReader(db, query.UsersQuery())
-	transformer := transformer.NewUserTransformer()
+	orders := processors.NewSQLReader(db, query.OrderQuery())
+	transformer := transformer.NewOrderTransformer()
 
 	bigqueryconfig := &processors.BigQueryConfig{JsonPemPath: config.JsonPemPath, ProjectID: config.ProjectID, DatasetID: config.DatasetID}
-	bigquery := processors.NewBigQueryWriter(bigqueryconfig, "user")
+	bigquery := processors.NewBigQueryWriter(bigqueryconfig, "orders")
 
-	pipeline, err := pipeline.SQL_Transform_BigQuery(users, transformer, bigquery)
+	pipeline, err := pipeline.SQL_Transform_BigQuery(orders, transformer, bigquery)
 
 	if err != nil {
 		panic(err.Error())
