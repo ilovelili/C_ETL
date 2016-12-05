@@ -35,6 +35,7 @@ type GCPCredential struct {
 type BigQuery struct {
 	ProjectID string `json:"projectId"`
 	DatasetID string `json:"datasetId"`
+	DataTable string `json:"datatable"`
 }
 
 // GoogleCloudPlatform Google Cloud Platform config
@@ -68,10 +69,16 @@ type CloudConfig struct {
 	AmazonWebService    `json:"aws"`
 }
 
+// Extension extension info like csv saving options
+type Extension struct {
+	CSVSavePath string `json:"csvsavepath"`
+}
+
 // Config config info
 type Config struct {
 	OnPremisesConfig `json:"onpremises"`
 	CloudConfig      `json:"cloud"`
+	Extension        `json:"extension"`
 }
 
 // GetConfig parse config info from config.json

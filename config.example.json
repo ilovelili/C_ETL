@@ -19,7 +19,8 @@
             },
             "bigquery": {                
                 "projectId": "your project id",
-                "datasetId": "your dataset id"
+                "datasetId": "your dataset id",
+                "datatable": "your datatable"
             }
         },
         "aws": {

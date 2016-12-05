@@ -52,5 +52,9 @@ result = <-pipeline.Run()
 - Handling extracting data from application databases, transforming it into reporting-oriented formats, and then loading it into dedicated reporting databases.
 - When you have data stored in disparate locations that can't be easily tied together, for example, if you have some CSV data stored on S3, some related data in a SQL database, and want to combine them into a final CSV or SQL output.
 
+## Install
+For Shift_JIS encoding / decoding support
+* go get -u golang.org/x/text/encoding/japanese
+
 ## Contact
 mju@cimpress.com
