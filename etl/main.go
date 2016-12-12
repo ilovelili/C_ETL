@@ -7,7 +7,6 @@ import (
 	"etl/config"
 	"etl/pipeline"
 	"flag"
-	"os"
 	"time"
 
 	"github.com/dailyburn/ratchet/processors"
@@ -17,14 +16,21 @@ import (
 )
 
 var (
-	date = flag.String("date", "", "object date")
+	from = flag.String("from", "", "date from")
+	to   = flag.String("to", "", "date from")
 )
 
 func main() {
 	flag.Parse()
 
-	if *date == "" {
-		*date = time.Now().Format("2006-01-02")
+	// from today
+	if *from == "" {
+		*from = time.Now().Format("2006-01-02")
+	}
+
+	// to yesterday
+	if *to == "" {
+		*to = time.Now().AddDate(0, 0, 1).Format("2006-01-02")
 	}
 
 	config := config.GetConfig()
@@ -35,7 +41,7 @@ func main() {
 		panic(err.Error())
 	}
 
-	orders := processors.NewSQLReader(db, query.SQLOrderQuery(*date))
+	orders := processors.NewSQLReader(db, query.SQLOrderQuery(*from, *to))
 	transformer := transformer.NewOrderTransformer()
 
 	bigqueryconfig := &processors.BigQueryConfig{JsonPemPath: config.JsonPemPath, ProjectID: config.ProjectID, DatasetID: config.DatasetID}
@@ -48,5 +54,5 @@ func main() {
 	}
 
 	<-pipeline.Run()
-	os.Exit(0)
+	// os.Exit(0)
 }
