@@ -20,5 +20,5 @@ func SQLOrderQuery(date string) string {
 		FROM lms.line_items items 
 		join lms.orders orders on orders.id = items.order_id 
 		join lms.addresses addresses on addresses.id = items.address_id 
-		join lms.skus skus on skus.id = items.sku_id where items.line_status_id != 1 and DATE(created_at)=%s`, date)
+		join lms.skus skus on skus.id = items.sku_id where items.line_status_id != 1 and DATE(orders.created_at)=%s`, date)
 }
