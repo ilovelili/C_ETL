@@ -146,6 +146,10 @@ func (c *Client) InsertRows(projectID, datasetID, tableID string, rows []map[str
 	}
 
 	if len(result.InsertErrors) > 0 {
+		for _, inserterr := range result.InsertErrors {
+			fmt.Println(inserterr.Errors[0].Message)
+		}
+
 		return errors.New("Error inserting rows")
 	}
 
