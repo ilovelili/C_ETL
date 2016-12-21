@@ -24,7 +24,7 @@ import (
 
 var (
 	from   = flag.String("from", time.Now().Format("2006-01-02") /*today*/, "date from")
-	to     = flag.String("to", time.Now().AddDate(0, 0, 1).Format("2006-01-02") /*yesterday*/, "date to")
+	to     = flag.String("to", time.Now().AddDate(0, 0, 1).Format("2006-01-02") /*tomorrow*/, "date to")
 	domain = flag.String("domain", "columbus", "domain to select. DCOME or Columbus")
 )
 
