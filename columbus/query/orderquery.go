@@ -6,15 +6,28 @@ import "fmt"
 func SQLOrderQuery(from string, to string) string {
 	return fmt.Sprintf(
 		`select 
-            a.merchant_product_id as sku,	        
-            a.display_name as description,
-            a.quantity, 
-            CONCAT(b.billing_first_name, ' ',  b.billing_last_name) as name,
-            b.billing_city as city,
-            b.billing_state_or_province as prefecture,
-            b.date_placed as created 
-        from columbus.columbus.line_item a 
+            a.merchant_product_id as sku,
+            a.quantity, 	
+			a.retail_price_list_price as itembaseprice,
+			a.retail_price_discounted_price as itemdiscountprice,
+			a.retail_price_base_tax as itembasetax,
+			a.retail_price_shipping_list_price as itemshippingprice,
+			a.retail_price_shipping_discounted_price as itemshippingdiscountprice,
+			a.retail_price_shipping_tax as itemshippingtax,
+			a.retail_price_total_tax as itemtotaltax,
+			a.retail_price_grand_total as itemgrandtotalprice,            
+            b.date_placed as created,
+			b._id as orderid,
+			b.line_items_retail_price_grand_total_sum as orderprice,
+			b.line_items_retail_price_discounted_price_sum as orderdiscountprice,
+			b.line_items_retail_price_base_tax_sum as orderbasetax,
+			b.line_items_retail_price_shipping_discounted_price_sum as ordershippingprice,
+			b.line_items_retail_price_shipping_tax_sum as ordershippingtax,
+			d.skeema as [schema]
+        from columbus.columbus.line_item a with(nolock)
             join columbus.columbus.sales_order b on a.sales_order_row_id = b.row_id 
+			join columbus.columbus.fulfillment_sku_mapping c on a.merchant_product_id = c._id
+			left join columbus.columbus.product d on c.internal_product_id = d.internal_product_id
         where 
             b.transaction_country = 'JP' and a.status != 'Canceled' and b.date_placed between '%s' and '%s'`, from, to)
 }

@@ -2,18 +2,44 @@ package model
 
 // Order order get by sql
 type Order struct {
-	Name        string
-	Sku         string
-	Quantity    int
-	Description string
-	City        string
-	Prefecture  string
-	Created     string
+	Sku                       string
+	Quantity                  int
+	Created                   string
+	ItemBasePrice             string
+	ItemDiscountPrice         string
+	ItemBaseTax               string
+	ItemShippingPrice         string
+	ItemShippingDiscountPrice string
+	ItemShippingTax           string
+	ItemTotalTax              string
+	ItemGrandTotalPrice       string
+	OrderID                   string
+	OrderPrice                string
+	OrderDiscountPrice        string
+	OrderBaseTax              string
+	OrderShippingPrice        string
+	OrderShippingTax          string
+	Schema                    string
 }
 
-// OrderTransfromed order transferred
-type OrderTransfromed struct {
-	Sku      string
-	Quantity int
-	Created  string
+// OrderTransformed order transferred
+type OrderTransformed struct {
+	Sku                       string
+	Quantity                  int
+	Created                   string
+	ItemBasePrice             string
+	ItemDiscountPrice         string
+	ItemBaseTax               string
+	ItemShippingPrice         string
+	ItemShippingDiscountPrice string
+	ItemShippingTax           string
+	ItemTotalTax              string
+	ItemGrandTotalPrice       string
+	OrderID                   string
+	OrderPrice                string
+	OrderDiscountPrice        string
+	OrderBaseTax              string
+	OrderShippingPrice        string
+	OrderShippingTax          string
+	Schema                    string
 }

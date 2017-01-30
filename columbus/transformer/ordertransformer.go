@@ -30,14 +30,31 @@ func (t *orderTransformer) ProcessData(d data.JSON, outputChan chan data.JSON, k
 }
 
 func (t *orderTransformer) Finish(outputChan chan data.JSON, killChan chan error) {
-	var transforms []model.OrderTransfromed
+	var transforms []model.OrderTransformed
 
 	// Step 3: Loop through slice and transform data
 	for _, order := range t.batchedOrders {
-		transform := model.OrderTransfromed{}
+		transform := model.OrderTransformed{}
+		transform.OrderID = order.OrderID
 		transform.Sku = order.Sku
 		transform.Quantity = order.Quantity
 		transform.Created = order.Created
+
+		transform.ItemBasePrice = order.ItemBasePrice
+		transform.ItemDiscountPrice = order.ItemDiscountPrice
+		transform.ItemBaseTax = order.ItemBaseTax
+		transform.ItemShippingPrice = order.ItemShippingPrice
+		transform.ItemShippingDiscountPrice = order.ItemShippingDiscountPrice
+		transform.ItemShippingTax = order.ItemShippingTax
+		transform.ItemTotalTax = order.ItemTotalTax
+		transform.ItemGrandTotalPrice = order.ItemGrandTotalPrice
+
+		transform.OrderPrice = order.OrderPrice
+		transform.OrderDiscountPrice = order.OrderDiscountPrice
+		transform.OrderBaseTax = order.OrderBaseTax
+		transform.OrderShippingPrice = order.OrderShippingPrice
+		transform.OrderShippingTax = order.OrderShippingTax
+		transform.Schema = order.Schema
 
 		transforms = append(transforms, transform)
 	}
