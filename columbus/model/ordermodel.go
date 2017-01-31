@@ -19,6 +19,7 @@ type Order struct {
 	OrderBaseTax              string
 	OrderShippingPrice        string
 	OrderShippingTax          string
+	Coupon                    string
 	Schema                    string
 }
 
@@ -41,5 +42,6 @@ type OrderTransformed struct {
 	OrderBaseTax              string
 	OrderShippingPrice        string
 	OrderShippingTax          string
+	Coupon                    string
 	Schema                    string
 }

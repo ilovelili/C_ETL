@@ -54,6 +54,7 @@ func (t *orderTransformer) Finish(outputChan chan data.JSON, killChan chan error
 		transform.OrderBaseTax = order.OrderBaseTax
 		transform.OrderShippingPrice = order.OrderShippingPrice
 		transform.OrderShippingTax = order.OrderShippingTax
+		transform.Coupon = order.Coupon
 		transform.Schema = order.Schema
 
 		transforms = append(transforms, transform)
