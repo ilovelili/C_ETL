@@ -24,11 +24,11 @@ func SQLOrderQuery(from string, to string) string {
 			b.line_items_retail_price_shipping_discounted_price_sum as ordershippingprice,
 			b.line_items_retail_price_shipping_tax_sum as ordershippingtax,
 			b.coupon_code as coupon,
-			d.skeema as [schema]
+			d.[schema] as [schema]
         from columbus.columbus.line_item a with(nolock)
             join columbus.columbus.sales_order b on a.sales_order_row_id = b.row_id 
 			join columbus.columbus.fulfillment_sku_mapping c on a.merchant_product_id = c._id
-			left join columbus.columbus.product d on c.internal_product_id = d.internal_product_id
+			left join columbus..product_vpj_uniforms_products2 d on c.internal_product_id = d._id
         where 
             b.transaction_country = 'JP' and a.status != 'Canceled' and b.date_placed between '%s' and '%s'`, from, to)
 }
