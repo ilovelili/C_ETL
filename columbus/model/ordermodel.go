@@ -14,6 +14,7 @@ type Order struct {
 	ItemTotalTax              string
 	ItemGrandTotalPrice       string
 	OrderID                   string
+	LineItemCount             int
 	OrderPrice                string
 	OrderDiscountPrice        string
 	OrderBaseTax              string
@@ -37,6 +38,7 @@ type OrderTransformed struct {
 	ItemTotalTax              string
 	ItemGrandTotalPrice       string
 	OrderID                   string
+	LineItemCount             int
 	OrderPrice                string
 	OrderDiscountPrice        string
 	OrderBaseTax              string

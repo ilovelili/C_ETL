@@ -18,6 +18,7 @@ func SQLOrderQuery(from string, to string) string {
 			a.retail_price_grand_total as itemgrandtotalprice,            
             b.date_placed as created,
 			b._id as orderid,
+			b.line_item_count as lineitemcount,
 			b.line_items_retail_price_grand_total_sum as orderprice,
 			b.line_items_retail_price_discounted_price_sum as orderdiscountprice,
 			b.line_items_retail_price_base_tax_sum as orderbasetax,

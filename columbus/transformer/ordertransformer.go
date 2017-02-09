@@ -49,6 +49,7 @@ func (t *orderTransformer) Finish(outputChan chan data.JSON, killChan chan error
 		transform.ItemTotalTax = order.ItemTotalTax
 		transform.ItemGrandTotalPrice = order.ItemGrandTotalPrice
 
+		transform.LineItemCount = order.LineItemCount
 		transform.OrderPrice = order.OrderPrice
 		transform.OrderDiscountPrice = order.OrderDiscountPrice
 		transform.OrderBaseTax = order.OrderBaseTax
