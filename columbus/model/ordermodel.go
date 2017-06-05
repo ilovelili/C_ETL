@@ -3,6 +3,7 @@ package model
 // Order order get by sql
 type Order struct {
 	Sku                       string
+	Name                      string
 	Quantity                  int
 	Created                   string
 	ItemBasePrice             string
@@ -22,11 +23,13 @@ type Order struct {
 	OrderShippingTax          string
 	Coupon                    string
 	Schema                    string
+	McpSku                    string
 }
 
 // OrderTransformed order transferred
 type OrderTransformed struct {
 	Sku                       string
+	Name                      string
 	Quantity                  int
 	Created                   string
 	ItemBasePrice             string
@@ -46,4 +49,5 @@ type OrderTransformed struct {
 	OrderShippingTax          string
 	Coupon                    string
 	Schema                    string
+	McpSku                    string
 }

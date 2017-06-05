@@ -36,6 +36,8 @@ func (t *orderTransformer) Finish(outputChan chan data.JSON, killChan chan error
 	for _, order := range t.batchedOrders {
 		transform := model.OrderTransformed{}
 		transform.OrderID = order.OrderID
+
+		transform.Name = order.Name
 		transform.Sku = order.Sku
 		transform.Quantity = order.Quantity
 		transform.Created = order.Created
@@ -57,6 +59,7 @@ func (t *orderTransformer) Finish(outputChan chan data.JSON, killChan chan error
 		transform.OrderShippingTax = order.OrderShippingTax
 		transform.Coupon = order.Coupon
 		transform.Schema = order.Schema
+		transform.McpSku = order.McpSku
 
 		transforms = append(transforms, transform)
 	}
