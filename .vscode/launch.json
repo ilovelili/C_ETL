@@ -12,9 +12,7 @@
             "program": "${workspaceRoot}/etl/main.go",
             "env": {},
             "args": [
-                "-domain=columbus",
-                "-from=2016-07-01",
-                "-to=2016-07-10"
+                "-domain=np"                
             ],
             "showLog": true
         }
