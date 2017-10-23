@@ -8,6 +8,7 @@ func SQLShippingQuery(from string, to string) string {
 		item_id,
 		long_item_id,
 		tracking_id,
+		sku,
 		quantity,
 		country,
 		postal_code,

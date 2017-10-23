@@ -5,6 +5,7 @@ type ShippingInfoReceived struct {
 	Item_ID      string
 	Long_Item_ID string
 	Tracking_ID  string
+	Sku          string
 	Quantity     int
 	Country      string
 	Postal_Code  string
@@ -25,6 +26,7 @@ type ShippingInfoTransformed struct {
 	ItemID     string
 	LongItemID string
 	TrackingID string
+	Sku        string
 	Quantity   int
 	Country    string
 	PostalCode string
