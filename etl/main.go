@@ -25,7 +25,7 @@ import (
 var (
 	from   = flag.String("from", time.Now().Format("2006-01-02") /*today*/, "date from")
 	to     = flag.String("to", time.Now().AddDate(0, 0, 1).Format("2006-01-02") /*tomorrow*/, "date to")
-	domain = flag.String("domain", "columbus", "domain to select. DCOME or Columbus")
+	domain = flag.String("domain", "columbus", "domain to select. DCOME or Columbus or NP")
 )
 
 func main() {
@@ -39,26 +39,33 @@ func main() {
 		panic(err.Error())
 	}
 
-	var orders *processors.SQLReader
+	var sqlreader *processors.SQLReader
 	var transformer transformer.CustomTransformer
 	var bigquery *processors.BigQueryWriter
 
 	if strings.ToLower(*domain) == "dcome" {
-		orders = processors.NewSQLReader(db, dcomequery.SQLOrderQuery(*from, *to))
+		sqlreader = processors.NewSQLReader(db, dcomequery.SQLOrderQuery(*from, *to))
 		transformer = dcometransformer.NewOrderTransformer()
 
 		bigqueryconfig := &processors.BigQueryConfig{JsonPemPath: config.JsonPemPath, ProjectID: config.ProjectID, DatasetID: config.DatasetID}
 		bigquery = processors.NewBigQueryWriter(bigqueryconfig, config.DataTable)
 
 	} else if strings.ToLower(*domain) == "columbus" {
-		orders = processors.NewSQLReader(db, columbusquery.SQLOrderQuery(*from, *to))
+		sqlreader = processors.NewSQLReader(db, columbusquery.SQLOrderQuery(*from, *to))
 		transformer = columbustransformer.NewOrderTransformer()
+
+		bigqueryconfig := &processors.BigQueryConfig{JsonPemPath: config.JsonPemPath, ProjectID: config.ProjectID, DatasetID: config.DatasetID}
+		bigquery = processors.NewBigQueryWriter(bigqueryconfig, config.DataTable)
+
+	} else if strings.ToLower(*domain) == "np" {
+		sqlreader = processors.NewSQLReader(db, dcomequery.SQLShippingQuery(*from, *to))
+		transformer = dcometransformer.NewShippingInfoTransformer()
 
 		bigqueryconfig := &processors.BigQueryConfig{JsonPemPath: config.JsonPemPath, ProjectID: config.ProjectID, DatasetID: config.DatasetID}
 		bigquery = processors.NewBigQueryWriter(bigqueryconfig, config.DataTable)
 	}
 
-	pipeline, err := pipeline.SQL_Transform_BigQuery(orders, transformer, bigquery)
+	pipeline, err := pipeline.SQL_Transform_BigQuery(sqlreader, transformer, bigquery)
 	if err != nil {
 		panic(err.Error())
 	}

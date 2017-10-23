@@ -11,7 +11,11 @@
             "host": "127.0.0.1",
             "program": "${workspaceRoot}/etl/main.go",
             "env": {},
-            "args": [],
+            "args": [
+                "-domain=columbus",
+                "-from=2016-07-01",
+                "-to=2016-07-10"
+            ],
             "showLog": true
         }
     ]
