@@ -2,7 +2,6 @@ package model
 
 // ShippingInfoReceived shipping info received by processor. Which is the basic entity for analytics
 type ShippingInfoReceived struct {
-	ID           string
 	Item_ID      string
 	Long_Item_ID string
 	Tracking_ID  string

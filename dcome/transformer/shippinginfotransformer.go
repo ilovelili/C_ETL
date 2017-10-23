@@ -35,17 +35,17 @@ func (t *shippingInfoTransformer) Finish(outputChan chan data.JSON, killChan cha
 	// Step 3: Loop through slice and transform data
 	for _, shippinginfo := range t.batchedShippingInfo {
 		transform := model.ShippingInfoTransformed{}
-		transform.ItemID = shippinginfo.Item_ID
-		transform.LongItemID = shippinginfo.Long_Item_ID
-		transform.TrackingID = shippinginfo.Tracking_ID
+		transform.ItemID = resolveEmpty(shippinginfo.Item_ID)
+		transform.LongItemID = resolveEmpty(shippinginfo.Long_Item_ID)
+		transform.TrackingID = resolveEmpty(shippinginfo.Tracking_ID)
 		transform.Quantity = shippinginfo.Quantity
-		transform.Country = shippinginfo.Country
-		transform.PostalCode = shippinginfo.Postal_Code
-		transform.Address = shippinginfo.Prefecture + " " + shippinginfo.City + " " + shippinginfo.Street1 + " " + shippinginfo.Street2
-		transform.Company = shippinginfo.Company
-		transform.Name = shippinginfo.First_Name + shippinginfo.Middle_Name + shippinginfo.Last_Name
-		transform.Phone = shippinginfo.Phone
-		transform.Created = shippinginfo.Created_At
+		transform.Country = resolveEmpty(shippinginfo.Country)
+		transform.PostalCode = resolveEmpty(shippinginfo.Postal_Code)
+		transform.Address = resolveEmpty(shippinginfo.Prefecture + " " + shippinginfo.City + " " + shippinginfo.Street1 + " " + shippinginfo.Street2)
+		transform.Company = resolveEmpty(shippinginfo.Company)
+		transform.Name = resolveEmpty(shippinginfo.First_Name + shippinginfo.Middle_Name + shippinginfo.Last_Name)
+		transform.Phone = resolveEmpty(shippinginfo.Phone)
+		transform.Created = resolveEmpty(shippinginfo.Created_At)
 
 		transforms = append(transforms, transform)
 	}
@@ -61,4 +61,14 @@ func (t *shippingInfoTransformer) Finish(outputChan chan data.JSON, killChan cha
 			outputChan <- dd
 		}
 	}
+}
+
+func resolveEmpty(input string) (output string) {
+	if input == "" {
+		output = "NA"
+	} else {
+		output = input
+	}
+
+	return
 }
