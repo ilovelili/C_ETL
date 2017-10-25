@@ -37,7 +37,8 @@ func (t *shippingInfoTransformer) Finish(outputChan chan data.JSON, killChan cha
 		transform := model.ShippingInfoTransformed{}
 		transform.ItemID = resolveEmpty(shippinginfo.Item_ID)
 		transform.LongItemID = resolveEmpty(shippinginfo.Long_Item_ID)
-		transform.Sku = resolveEmpty(shippinginfo.Sku)
+		transform.McpSku = resolveEmpty(shippinginfo.Sku)
+		transform.KisSku = resolveEmpty(shippinginfo.Name)
 		transform.TrackingID = resolveEmpty(shippinginfo.Tracking_ID)
 		transform.Quantity = shippinginfo.Quantity
 		transform.Country = resolveEmpty(shippinginfo.Country)
